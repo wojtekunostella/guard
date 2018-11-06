@@ -1,11 +1,11 @@
+import {Routes, RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HomeComponent} from './home/home.component';
 import {ServersComponent} from './servers/servers.component';
 import {EditServerComponent} from './servers/edit-server/edit-server.component';
-import {UsersComponent} from './users/users.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
-import {Routes, RouterModule} from '@angular/router';
+import {UsersComponent} from './users/users.component';
 import {AuthGuard} from './auth-guard.service';
 import {ServerComponent} from './servers/server/server.component';
 import {UserComponent} from './users/user/user.component';
@@ -15,7 +15,7 @@ const appRoutes: Routes = [
 		path: '', component: HomeComponent
 	},
 	{
-		path: 'users', component: UsersComponent, children: [
+		path: 'users', canActivateChild: [AuthGuard], component: UsersComponent, children: [
 			{
 				path: ':id/:name', component: UserComponent
 			}
@@ -27,7 +27,7 @@ const appRoutes: Routes = [
 				path: ':id', component: ServerComponent
 			},
 			{
-				path: ':id/edit', component: EditServerComponent
+				path: 'edit/:id', component: EditServerComponent
 			}
 		]
 	},
